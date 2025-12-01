@@ -90,8 +90,21 @@ header {
 .hero {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: var(--white);
-    padding: 5rem 0;
-    text-align: center;
+    padding: 5rem 0 0 0;
+    overflow: hidden;
+}
+
+.hero-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 3rem;
+    padding-bottom: 0;
+}
+
+.hero-content {
+    flex: 1;
+    text-align: left;
+    padding-bottom: 5rem;
 }
 
 .hero h1 {
@@ -107,9 +120,26 @@ header {
 
 .hero-description {
     font-size: 1.1rem;
-    max-width: 700px;
-    margin: 0 auto 2rem;
+    max-width: 600px;
+    margin: 0 0 2rem 0;
     opacity: 0.9;
+}
+
+.hero-image {
+    flex: 1;
+    max-width: 450px;
+    position: relative;
+    align-self: flex-end;
+    overflow: hidden;
+    max-height: 400px;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    object-position: top center;
 }
 
 .cta-buttons {
@@ -480,12 +510,33 @@ footer a:hover {
 
 /* Responsive */
 @media (max-width: 768px) {
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
     .hero h1 {
         font-size: 2rem;
     }
 
     .hero-subtitle {
         font-size: 1.2rem;
+    }
+
+    .hero-description {
+        margin: 0 auto 2rem;
+    }
+
+    .hero-image {
+        max-width: 100%;
+    }
+
+    .cta-buttons {
+        justify-content: center;
     }
 
     .nav-menu {
