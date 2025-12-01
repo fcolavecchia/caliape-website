@@ -1,7 +1,7 @@
 /* Variables CSS */
 :root {
-    --primary-color: #4a90e2;
-    --secondary-color: #2c3e50;
+    --primary-color: #263c2a;
+    --secondary-color: #086d2f;
     --accent-color: #e74c3c;
     --text-color: #333;
     --light-bg: #f8f9fa;
@@ -56,6 +56,14 @@ header {
     font-weight: bold;
     color: var(--primary-color);
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
 }
 
 .nav-menu {

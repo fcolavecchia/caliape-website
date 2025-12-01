@@ -21,7 +21,7 @@ permalink: /blog.html
                     <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
                     <p class="post-meta">
                         <time datetime="{{ post.date | date_to_xmlschema }}">
-                            {{ post.date | date: "%d de %B de %Y" }}
+                            {% include date-es.html date=post.date %}
                         </time>
                     </p>
                     <p class="post-excerpt">{{ post.excerpt }}</p>
