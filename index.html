@@ -48,6 +48,112 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
     </div>
 </section>
 
+<!-- Sección de invitación a pruebas beta -->
+<section id="beta" class="beta-invite">
+    <div class="container">
+        <h2>Unite a nuestra prueba beta</h2>
+        <p>¿Sos profesional de la salud interesado en transformar tu consulta médica? 
+           Sumate a nuestra prueba beta exclusiva y sé de los primeros en experimentar Calíape.</p>
+        
+        <form class="beta-form" id="betaForm">
+            <h3 class="form-section-title">Datos requeridos</h3>
+            <input 
+                type="text" 
+                name="nombre" 
+                placeholder="Nombre"
+                required
+                aria-label="Nombre">
+            <input 
+                type="text" 
+                name="apellido" 
+                placeholder="Apellido"
+                required
+                aria-label="Apellido">
+            <input 
+                type="email" 
+                name="email" 
+                placeholder="Email profesional"
+                required
+                aria-label="Email profesional">
+            <input 
+                type="text" 
+                name="especialidad" 
+                placeholder="Especialidad médica"
+                required
+                aria-label="Especialidad médica">
+            
+            <h3 class="form-section-title">Datos opcionales</h3>
+            <input 
+                type="text" 
+                name="edad" 
+                placeholder="Edad"
+                aria-label="Edad">
+            <input 
+                type="text" 
+                name="matricula" 
+                placeholder="Matrícula profesional"
+                aria-label="Matrícula profesional">
+            <input 
+                type="tel" 
+                name="telefono" 
+                placeholder="Celular"
+                aria-label="Celular">
+            
+            <button type="submit">Solicitar acceso beta</button>
+        </form>
+        <div id="formMessage" class="beta-form-message"></div>
+    </div>
+</section>
+
+<script>
+document.getElementById('betaForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const nombre = formData.get('nombre');
+    const apellido = formData.get('apellido');
+    const email = formData.get('email');
+    const especialidad = formData.get('especialidad');
+    const edad = formData.get('edad');
+    const matricula = formData.get('matricula');
+    const telefono = formData.get('telefono') || '';
+    
+    // URL del Google Form con tu Form ID
+    const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSckceahCPzytS7G-rBsJo3TEN2jTFmSAFl-dDLOEqR-E4_8gQ/formResponse';
+    
+    // Entry IDs de tu Google Form
+    const formBody = new URLSearchParams({
+        'entry.1239758288': nombre,        
+        'entry.1589314304': apellido,      
+        'entry.213742462': email,         
+        'entry.678704696': especialidad,  
+        'entry.583972878': edad,
+        'entry.2118862770': matricula,
+        'entry.980961395': telefono       
+    });
+    
+    const messageDiv = document.getElementById('formMessage');
+    
+    fetch(googleFormURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formBody
+    }).then(() => {
+        messageDiv.textContent = '¡Gracias! Tu solicitud ha sido enviada correctamente.';
+        messageDiv.className = 'beta-form-message success';
+        document.getElementById('betaForm').reset();
+    }).catch(() => {
+        messageDiv.textContent = 'Gracias por tu interés. Nos pondremos en contacto pronto.';
+        messageDiv.className = 'beta-form-message success';
+        document.getElementById('betaForm').reset();
+    });
+});
+</script>
+
+
 <section class="cta-section">
     <div class="container">
         <h2>Humanizando la atención médica</h2>

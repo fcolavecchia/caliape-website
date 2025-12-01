@@ -218,6 +218,104 @@ header {
     color: var(--secondary-color);
 }
 
+/* Beta Invite Section */
+.beta-invite {
+    padding: 5rem 0;
+    text-align: center;
+    background-color: var(--white);
+}
+
+.beta-invite h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--secondary-color);
+}
+
+.beta-invite p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    color: var(--text-color);
+    line-height: 1.7;
+}
+
+.beta-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-section-title {
+    grid-column: 1 / -1;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    border-bottom: 2px solid var(--light-gray);
+    padding-bottom: 0.5rem;
+}
+
+.form-section-title:first-of-type {
+    margin-top: 0;
+}
+
+.beta-form input[type="text"],
+.beta-form input[type="email"],
+.beta-form input[type="tel"] {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    font-family: inherit;
+}
+
+.beta-form input[type="text"]:focus,
+.beta-form input[type="email"]:focus,
+.beta-form input[type="tel"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.beta-form button {
+    grid-column: 1 / -1;
+    padding: 0.75rem 2rem;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.beta-form button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.beta-form-message {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 500;
+}
+
+.beta-form-message.success {
+    color: #28a745;
+}
+
+.beta-form-message.error {
+    color: var(--accent-color);
+}
+
 /* CTA Section */
 .cta-section {
     padding: 5rem 0;
