@@ -1,0 +1,35 @@
+# Configuración del sitio Calíape
+title: Calíape
+description: >-
+  Calíape - Tu compañera inteligente para el aprendizaje
+baseurl: "" # la subruta de tu sitio, ej. /blog
+url: "https://www.caliape.com" # la URL base del sitio
+
+# Configuración de construcción
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Idioma
+lang: es-ES
+
+# Configuración de permalinks
+permalink: /blog/:year/:month/:day/:title/
+
+# Colecciones
+collections:
+  privacidad:
+    output: true
+
+# Excluir archivos de la construcción
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md

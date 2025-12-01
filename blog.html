@@ -1,0 +1,35 @@
+---
+layout: default
+title: Blog
+description: Lee nuestros últimos artículos sobre educación, tecnología y aprendizaje.
+---
+
+<section class="blog-header">
+    <div class="container">
+        <h1>Blog de Calíape</h1>
+        <p>Descubre consejos, noticias y recursos sobre aprendizaje y tecnología educativa</p>
+    </div>
+</section>
+
+<section class="blog-posts">
+    <div class="container">
+        {% if site.posts.size > 0 %}
+            <div class="posts-grid">
+                {% for post in site.posts %}
+                <article class="post-card">
+                    <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+                    <p class="post-meta">
+                        <time datetime="{{ post.date | date_to_xmlschema }}">
+                            {{ post.date | date: "%d de %B de %Y" }}
+                        </time>
+                    </p>
+                    <p class="post-excerpt">{{ post.excerpt }}</p>
+                    <a href="{{ post.url | relative_url }}" class="read-more">Leer más →</a>
+                </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-posts">Aún no hay publicaciones disponibles. ¡Vuelve pronto!</p>
+        {% endif %}
+    </div>
+</section>
