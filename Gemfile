@@ -8,9 +8,6 @@ gem "csv"
 gem "logger"
 gem "base64"
 
-# Tema por defecto
-gem "minima", "~> 2.5"
-
 # Plugins de Jekyll
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
