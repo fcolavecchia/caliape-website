@@ -1,7 +1,8 @@
 # Configuración del sitio Calíape
 title: Calíape
 description: >-
-  Calíape - Tu compañera inteligente para el aprendizaje
+  Calíape - Aplicación móvil de IA médica que automatiza la generación de historias clínicas 
+  y humaniza la atención médica. Revolucionando la consulta médica en América Latina.
 baseurl: "" # la subruta de tu sitio, ej. /blog
 url: "https://www.caliape.com" # la URL base del sitio
 
