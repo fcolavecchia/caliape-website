@@ -4,6 +4,7 @@ title: "Bienvenidos al blog de Calíape"
 date: 2025-12-01 10:00:00 -0300
 author: Equipo Calíape
 tags: [bienvenida, anuncio, salud]
+excerpt: "¡Hola y bienvenidos al blog oficial de Calíape! Estamos emocionados de presentar una solución que está transformando la forma en que se documenta la atención médica. Calíape nace de la necesidad real de los profesionales de la salud: poder dedicar más tiempo a lo que realmente importa, sus pacientes."
 ---
 
 ¡Hola y bienvenidos al blog oficial de Calíape!

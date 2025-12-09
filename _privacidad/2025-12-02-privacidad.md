@@ -171,7 +171,7 @@ Para ejercer este derecho, debes enviar un correo electrónico con tu solicitud 
 
 **Datos Eliminados:** La solicitud abarca la eliminación de todos los datos de Usuario, audios almacenados, transcripciones, resúmenes, informes generados y cualquier dato derivado del procesamiento por IA.
 
-**Plazo y Consecuencias:** La eliminación de tu cuenta y datos se realizará dentro de un plazo máximo de **30 días hábiles**. Una vez completada esta acción, la eliminación es definitiva, y los datos no podrán recuperarse. La eliminación de datos de Calíape constituye una instrucción a Calíape (como Procesador de Datos), siendo responsabilidad del Usuario Médico asegurar que esta acción cumpla con sus obligaciones locales de retención de registros clínicos.
+**Plazo y Consecuencias:** La eliminación de tu cuenta y datos se realizará dentro de un plazo máximo de **30 días corridos**. Una vez completada esta acción, la eliminación es definitiva, y los datos no podrán recuperarse. La eliminación de datos de Calíape constituye una instrucción a Calíape (como Procesador de Datos), siendo responsabilidad del Usuario Médico asegurar que esta acción cumpla con sus obligaciones locales de retención de registros clínicos.
 
 
 ## Servicios de Terceros y Transferencias Internacionales de Datos
