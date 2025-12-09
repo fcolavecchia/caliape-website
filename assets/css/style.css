@@ -260,6 +260,67 @@ header {
     padding-bottom: 0.5rem;
 }
 
+.input-with-tooltip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.input-with-tooltip input {
+    flex: 1;
+}
+
+.tooltip-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: bold;
+    cursor: help;
+    flex-shrink: 0;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 125%;
+    right: 0;
+    background-color: var(--white);
+    color: var(--text-color);
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 250px;
+    font-size: 0.9rem;
+    font-weight: normal;
+    line-height: 1.4;
+    z-index: 10;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    border: 6px solid transparent;
+    border-top-color: var(--white);
+}
+
+.tooltip-icon:hover .tooltip-text,
+.tooltip-icon:focus .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
 .form-section-title:first-of-type {
     margin-top: 0;
 }
@@ -314,6 +375,17 @@ header {
     background-color: var(--secondary-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.beta-form .form-disclaimer {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--white);
+    font-size: 0.7rem !important;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    opacity: 0.7;
+    /* font-style: italic; */
 }
 
 .beta-form-message {
@@ -614,6 +686,128 @@ header {
     text-decoration: underline;
 }
 
+/* FAQ Section */
+.faq-header {
+    padding: 3rem 0;
+    background-color: var(--light-bg);
+    text-align: center;
+}
+
+.faq-header h1 {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.faq-content {
+    padding: 3rem 0;
+}
+
+.faq-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 3rem;
+}
+
+.faq-sidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+}
+
+.faq-nav h3 {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+.faq-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.faq-nav li {
+    margin-bottom: 0.75rem;
+}
+
+.faq-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.95rem;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.faq-nav a:hover {
+    background-color: var(--white);
+    color: var(--primary-color);
+    padding-left: 1rem;
+}
+
+.faq-main {
+    max-width: 800px;
+}
+
+.faq-item {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-item h2 {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    scroll-margin-top: 100px;
+}
+
+.faq-item-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.faq-item-content h2 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.faq-item-content h3 {
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.faq-item-content ul,
+.faq-item-content ol {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.faq-item-content li {
+    margin-bottom: 0.5rem;
+}
+
+.faq-item-content a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.faq-item-content a:hover {
+    text-decoration: underline;
+}
+
 /* Footer */
 footer {
     background-color: var(--secondary-color);
@@ -688,5 +882,24 @@ footer a:hover {
     .beta-form .form-helper-text {
         text-align: center;
         justify-content: center;
+    }
+
+    /* FAQ responsive */
+    .faq-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .faq-sidebar {
+        position: static;
+        order: 2;
+    }
+
+    .faq-main {
+        order: 1;
+    }
+
+    .faq-item h2 {
+        font-size: 1.5rem;
     }
 }

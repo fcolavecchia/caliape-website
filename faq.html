@@ -1,0 +1,51 @@
+---
+layout: default
+title: Preguntas Frecuentes
+description: Encuentra respuestas a las preguntas más frecuentes sobre Calíape.
+permalink: /faq.html
+---
+
+<section class="faq-header">
+    <div class="container">
+        <h1>Preguntas Frecuentes</h1>
+        <p>Encuentra respuestas a las preguntas más comunes sobre Calíape</p>
+    </div>
+</section>
+
+<section class="faq-content">
+    <div class="container">
+        <div class="faq-layout">
+            <!-- Menú lateral -->
+            <aside class="faq-sidebar">
+                <nav class="faq-nav">
+                    <h3>Contenido</h3>
+                    <ul>
+                        {% if site.faq %}
+                        {% assign sorted_faq = site.faq | sort: 'order' %}
+                        {% for item in sorted_faq %}
+                        <li><a href="#{{ item.slug }}">{{ item.title }}</a></li>
+                        {% endfor %}
+                        {% endif %}
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Contenido principal -->
+            <div class="faq-main">
+                {% if site.faq %}
+                {% assign sorted_faq = site.faq | sort: 'order' %}
+                {% for item in sorted_faq %}
+                <article id="{{ item.slug }}" class="faq-item">
+                    <h2>{{ item.title }}</h2>
+                    <div class="faq-item-content">
+                        {{ item.content }}
+                    </div>
+                </article>
+                {% endfor %}
+                {% else %}
+                <p>No hay preguntas frecuentes disponibles en este momento.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>

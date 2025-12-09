@@ -88,20 +88,32 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 name="edad" 
                 placeholder="Edad"
                 aria-label="Edad">
-            <input 
-                type="text" 
-                name="matricula" 
-                placeholder="Matrícula profesional"
-                aria-label="Matrícula profesional">
-                <p class="form-helper-text">Sumate a la comunidad de WhatsApp de Calíape: </p>
+            <div class="input-with-tooltip">
+                <input 
+                    type="text" 
+                    name="matricula" 
+                    placeholder="Matrícula profesional"
+                    aria-label="Matrícula profesional">
+                <span class="tooltip-icon" tabindex="0">
+                    ?
+                    <span class="tooltip-text">Es el número de registro profesional otorgado por el colegio o consejo profesional de tu jurisdicción.</span>
+                </span>
+            </div>
+            <p class="form-helper-text">Recibí las noticias de Calíape en WhatsApp: </p>
+            <div class="input-with-tooltip">
                 <input 
                 type="tel" 
                 name="telefono" 
                 placeholder="Celular"
                 aria-label="Celular">
-            
+                <span class="tooltip-icon" tabindex="1">
+                    ?
+                    <span class="tooltip-text">Incluí el código de área. Ejemplo: +54 9 11 1234-5678</span>
+                </span>
+            </div>
             
             <button type="submit">Solicitar acceso beta</button>
+            <p class="form-disclaimer">No compartiremos esta información con terceros con ningún fin.</p>
         </form>
         <div id="formMessage" class="beta-form-message"></div>
     </div>
