@@ -120,6 +120,35 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
 </section>
 
 <script>
+// Tooltip functionality for touch devices
+document.addEventListener('DOMContentLoaded', function() {
+    const tooltipIcons = document.querySelectorAll('.tooltip-icon');
+    
+    tooltipIcons.forEach(function(icon) {
+        icon.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Close other tooltips
+            tooltipIcons.forEach(function(otherIcon) {
+                if (otherIcon !== icon) {
+                    otherIcon.classList.remove('active');
+                }
+            });
+            
+            // Toggle this tooltip
+            this.classList.toggle('active');
+        });
+    });
+    
+    // Close tooltip when clicking outside
+    document.addEventListener('click', function() {
+        tooltipIcons.forEach(function(icon) {
+            icon.classList.remove('active');
+        });
+    });
+});
+
 document.getElementById('betaForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
