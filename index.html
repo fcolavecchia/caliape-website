@@ -81,6 +81,27 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 placeholder="Especialidad médica"
                 required
                 aria-label="Especialidad médica">
+            <input 
+                type="text" 
+                name="hospital" 
+                placeholder="Institución donde trabajás habitualmente"
+                aria-label="Institución donde trabajás habitualmente">
+            <input 
+                type="text" 
+                name="lugar" 
+                placeholder="Ciudad, provincia, país"
+                aria-label="Ciudad, provincia, país">
+            <p class="form-helper-text">Cómo te enteraste de Calíape? </p>
+            <select name="referido" aria-label="Cómo te enteraste de Calíape?">
+                <option value="" disabled selected>Seleccioná una opción</option>
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="Otras redes sociales">Otras redes sociales</option>
+                <option value="Noticias (web, diarios, streaming, radio, etc.)">Noticias (web, diarios, streaming, radio, etc.)</option>
+                <option value="Congreso o evento médico">Congreso o evento médico</option>
+                <option value="Referido por colegas">Referido por colegas</option>
+                <!-- <option value="Artículo o blog">Artículo o blog</option> -->
+                <option value="Otro">Otro</option>
+            </select>
             
             <h3 class="form-section-title">Datos opcionales</h3>
             <input 
@@ -98,7 +119,7 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                     ?
                     <span class="tooltip-text">Es el número de registro profesional otorgado por el colegio o consejo profesional de tu jurisdicción.</span>
                 </span>
-            </div>
+            </div>            
             <p class="form-helper-text">Recibí las noticias de Calíape en WhatsApp: </p>
             <div class="input-with-tooltip">
                 <input 
@@ -108,7 +129,7 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 aria-label="Celular">
                 <span class="tooltip-icon" tabindex="1">
                     ?
-                    <span class="tooltip-text">Incluí el código de área. Ejemplo: +54 9 11 1234-5678</span>
+                    <span class="tooltip-text">Incluí el código de país y área. <br>Ejemplo: +54 9 11 1234-5678</span>
                 </span>
             </div>
             
@@ -157,10 +178,13 @@ document.getElementById('betaForm').addEventListener('submit', function(e) {
     const apellido = formData.get('apellido');
     const email = formData.get('email');
     const especialidad = formData.get('especialidad');
-    const edad = formData.get('edad');
-    const matricula = formData.get('matricula');
+    const edad = formData.get('edad') || '';
+    const matricula = formData.get('matricula') || '';
     const telefono = formData.get('telefono') || '';
-    
+    const hospital = formData.get('hospital') ;
+    const lugar = formData.get('lugar');
+    const referido = formData.get('referido');
+
     // URL del Google Form con tu Form ID
     const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSckceahCPzytS7G-rBsJo3TEN2jTFmSAFl-dDLOEqR-E4_8gQ/formResponse';
     
@@ -172,7 +196,11 @@ document.getElementById('betaForm').addEventListener('submit', function(e) {
         'entry.678704696': especialidad,  
         'entry.583972878': edad,
         'entry.2118862770': matricula,
-        'entry.980961395': telefono       
+        'entry.980961395': telefono,
+        'entry.1901642424': hospital,
+        'entry.1737286529': lugar,
+        'entry.1505268358': referido 
+
     });
     
     const messageDiv = document.getElementById('formMessage');
