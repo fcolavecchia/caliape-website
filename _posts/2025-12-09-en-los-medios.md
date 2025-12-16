@@ -20,3 +20,7 @@ de desarrollos que nuestro país tiene.
   
 - [Talento joven que inspira](https://www.instagram.com/reel/DPFQh_LDe5B/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==)
 
+
+- [Científicos del CONICET impulsan proyectos de base tecnológica que se destacaron en el concurso IB50K del Instituto Balseiro](https://www.conicet.gov.ar/cientificos-del-conicet-impulsan-proyectos-de-base-tecnologica-que-se-destacaron-en-el-concurso-ib50k-del-instituto-balseiro/)
+
+- [Calíape, la aplicación que mejora la interacción entre el médico y el paciente, se probará en Bariloche](https://www.rionegro.com.ar/sociedad/caliape-la-aplicacion-que-mejora-la-interaccion-entre-el-medico-y-el-paciente-se-probara-en-bariloche/)
