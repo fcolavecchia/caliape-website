@@ -3,7 +3,7 @@ layout: privacy
 title: Política de Privacidad
 description: Política de privacidad de Calíape - Información sobre cómo protegemos y manejamos tus datos.
 date: 2025-12-18
-version: 1.2
+version: 1.3
 permalink: /privacidad.html
 ---
 
