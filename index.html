@@ -7,7 +7,7 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
 <section class="hero">
     <div class="container hero-container">
         <div class="hero-content">
-            <h1>Te damos la bienvenida a Calíape</h1>
+            <h1>Calíape humaniza la atención médica</h1>
             <p class="hero-subtitle">Revolucionando la consulta médica con inteligencia artificial</p>
             <p class="hero-description">
                 La primera aplicación móvil de IA médica que automatiza la generación de historias clínicas, 
@@ -85,15 +85,17 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 type="text" 
                 name="hospital" 
                 placeholder="Institución donde trabajás habitualmente"
+                required
                 aria-label="Institución donde trabajás habitualmente">
             <input 
                 type="text" 
                 name="lugar" 
                 placeholder="Ciudad, provincia, país"
+                required
                 aria-label="Ciudad, provincia, país">
-            <p class="form-helper-text">Cómo te enteraste de Calíape? </p>
-            <select name="referido" aria-label="Cómo te enteraste de Calíape?">
-                <option value="" disabled selected>Seleccioná una opción</option>
+            <p class="form-helper-text">Cómo te enteraste de Calíape? *</p>
+            <select name="referido" aria-label="Cómo te enteraste de Calíape?" required aria-required="true">
+                <option value="" disabled selected hidden>Seleccioná una opción</option>
                 <option value="LinkedIn">LinkedIn</option>
                 <option value="Otras redes sociales">Otras redes sociales</option>
                 <option value="Noticias (web, diarios, streaming, radio, etc.)">Noticias (web, diarios, streaming, radio, etc.)</option>
@@ -136,6 +138,19 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
             <button type="submit">Solicitar acceso beta</button>
             <p class="form-disclaimer">No compartiremos esta información con terceros con ningún fin.</p>
         </form>
+        <div id="betaTestPanel" style="display:none; margin-top: 1rem; text-align: center;">
+            <p class="form-disclaimer">Panel de pruebas (solo en local)</p>
+            <label style="display:inline-flex; align-items:center; gap:0.5rem; margin-bottom:0.75rem; color:#fff; font-size:0.8rem;">
+                <input type="checkbox" id="betaTestSendReal">
+                Enviar a Google Forms (real)
+            </label>
+            <div style="display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center;">
+                <button type="button" id="betaTestRequiredOnly" class="btn btn-secondary">Test: solo requeridos</button>
+                <button type="button" id="betaTestAllFields" class="btn btn-secondary">Test: todos los campos</button>
+                <button type="button" id="betaTestWhitespace" class="btn btn-secondary">Test: opcionales con espacios</button>
+                <button type="button" id="betaTestRunAll" class="btn btn-primary">Test: correr todos</button>
+            </div>
+        </div>
         <div id="formMessage" class="beta-form-message"></div>
     </div>
 </section>
@@ -170,8 +185,23 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.getElementById('betaForm').addEventListener('submit', function(e) {
+const betaForm = document.getElementById('betaForm');
+const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+const testMode = isLocalhost && window.BETA_FORM_TEST_MODE !== false;
+
+if (betaForm) {
+    betaForm.addEventListener('submit', function(e) {
     e.preventDefault();
+
+    if (!betaForm.checkValidity()) {
+        const messageDiv = document.getElementById('formMessage');
+        if (messageDiv) {
+            messageDiv.textContent = 'Revisá los campos obligatorios antes de enviar.';
+            messageDiv.className = 'beta-form-message error';
+        }
+        betaForm.reportValidity();
+        return;
+    }
     
     const formData = new FormData(this);
     const nombre = formData.get('nombre');
@@ -181,30 +211,46 @@ document.getElementById('betaForm').addEventListener('submit', function(e) {
     const edad = formData.get('edad') || '';
     const matricula = formData.get('matricula') || '';
     const telefono = formData.get('telefono') || '';
-    const hospital = formData.get('hospital') ;
-    const lugar = formData.get('lugar');
-    const referido = formData.get('referido');
+    const hospital = formData.get('hospital') || '';
+    const lugar = formData.get('lugar') || '';
+    const referido = formData.get('referido') || '';
 
     // URL del Google Form con tu Form ID
     const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSckceahCPzytS7G-rBsJo3TEN2jTFmSAFl-dDLOEqR-E4_8gQ/formResponse';
     
+
     // Entry IDs de tu Google Form
     const formBody = new URLSearchParams({
-        'entry.1239758288': nombre,        
-        'entry.1589314304': apellido,      
-        'entry.213742462': email,         
-        'entry.678704696': especialidad,  
-        'entry.583972878': edad,
-        'entry.2118862770': matricula,
-        'entry.980961395': telefono,
-        'entry.1901642424': hospital,
-        'entry.1737286529': lugar,
-        'entry.1505268358': referido 
-
+        'entry.1239758288': nombre,
+        'entry.1589314304': apellido,
+        'entry.213742462': email,
+        'entry.678704696': especialidad,
+        'entry.1737286529': hospital,
+        'entry.1901642424': lugar,
+        'entry.1505268358': referido
     });
+
+    const addIfValue = (entryId, value) => {
+        if (typeof value === 'string' && value.trim().length > 0) {
+            formBody.append(entryId, value.trim());
+        }else{}
+
+    };
+
+    addIfValue('entry.583972878', edad);
+    addIfValue('entry.980961395', telefono);
+    addIfValue('entry.2118862770', matricula);
     
     const messageDiv = document.getElementById('formMessage');
     
+    if (testMode && !window.BETA_FORM_TEST_SEND) {
+        console.log('TEST MODE - Payload:', Object.fromEntries(formBody.entries()));
+        messageDiv.textContent = 'TEST MODE: solicitud simulada. Payload en consola.';
+        messageDiv.className = 'beta-form-message success';
+        betaForm.reset();
+        return;
+    }
+
     fetch(googleFormURL, {
         method: 'POST',
         mode: 'no-cors',
@@ -215,13 +261,107 @@ document.getElementById('betaForm').addEventListener('submit', function(e) {
     }).then(() => {
         messageDiv.textContent = '¡Gracias! Tu solicitud ha sido enviada correctamente.';
         messageDiv.className = 'beta-form-message success';
-        document.getElementById('betaForm').reset();
+        betaForm.reset();
     }).catch(() => {
         messageDiv.textContent = 'Gracias por tu interés. Nos pondremos en contacto pronto.';
         messageDiv.className = 'beta-form-message success';
-        document.getElementById('betaForm').reset();
+        betaForm.reset();
     });
-});
+    });
+}
+
+const updateSubmitState = () => {
+    if (!betaForm) return;
+    const submitBtn = betaForm.querySelector('button[type="submit"]');
+    if (!submitBtn) return;
+    const isValid = betaForm.checkValidity();
+    submitBtn.disabled = !isValid;
+    submitBtn.classList.toggle('is-disabled', !isValid);
+};
+
+if (betaForm) {
+    updateSubmitState();
+    betaForm.addEventListener('input', updateSubmitState);
+    betaForm.addEventListener('change', updateSubmitState);
+}
+
+const setFieldValue = (name, value) => {
+    if (!betaForm) return;
+    const field = betaForm.querySelector(`[name="${name}"]`);
+    if (field) {
+        field.value = value;
+        field.dispatchEvent(new Event('input', { bubbles: true }));
+        field.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+};
+
+const baseRequired = {
+    nombre: 'TestNombre',
+    apellido: 'TestApellido',
+    email: 'test@example.com',
+    especialidad: 'Gastroenterología',
+    hospital: 'Hospital Central',
+    lugar: 'CABA, Argentina',
+    referido: 'LinkedIn'
+};
+
+const testCases = {
+    requiredOnly: {
+        ...baseRequired,
+        edad: '',
+        telefono: '',
+        matricula: ''
+    },
+    allFields: {
+        ...baseRequired,
+        hospital: 'Hospital Central',
+        lugar: 'CABA, Argentina',
+        referido: 'LinkedIn',
+        edad: '38',
+        telefono: '+54 9 11 1234-5678',
+        matricula: 'MP-12345'
+    },
+    whitespaceOptional: {
+        ...baseRequired,
+        edad: '   ',
+        telefono: '   ',
+        matricula: '   '
+    }
+};
+
+window.runBetaTestCase = (caseName) => {
+    const testData = testCases[caseName];
+    if (!betaForm || !testData) return;
+    Object.keys(testData).forEach((key) => setFieldValue(key, testData[key]));
+    betaForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+};
+
+window.runBetaTestSuite = async () => {
+    const caseNames = Object.keys(testCases);
+    for (const name of caseNames) {
+        window.runBetaTestCase(name);
+        await new Promise((resolve) => setTimeout(resolve, 400));
+    }
+};
+
+if (isLocalhost) {
+    const panel = document.getElementById('betaTestPanel');
+    if (panel) panel.style.display = 'block';
+    const sendRealToggle = document.getElementById('betaTestSendReal');
+    if (sendRealToggle) {
+        sendRealToggle.addEventListener('change', (e) => {
+            window.BETA_FORM_TEST_SEND = e.target.checked;
+        });
+    }
+    const requiredBtn = document.getElementById('betaTestRequiredOnly');
+    const allBtn = document.getElementById('betaTestAllFields');
+    const whitespaceBtn = document.getElementById('betaTestWhitespace');
+    const runAllBtn = document.getElementById('betaTestRunAll');
+    if (requiredBtn) requiredBtn.addEventListener('click', () => window.runBetaTestCase('requiredOnly'));
+    if (allBtn) allBtn.addEventListener('click', () => window.runBetaTestCase('allFields'));
+    if (whitespaceBtn) whitespaceBtn.addEventListener('click', () => window.runBetaTestCase('whitespaceOptional'));
+    if (runAllBtn) runAllBtn.addEventListener('click', () => window.runBetaTestSuite());
+}
 </script>
 
 

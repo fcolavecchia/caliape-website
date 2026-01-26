@@ -400,6 +400,15 @@ header {
     font-family: inherit;
 }
 
+.beta-form button:disabled,
+.beta-form button.is-disabled {
+    background-color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.8);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 .beta-form button:hover {
     background-color: var(--secondary-color);
     transform: translateY(-2px);
