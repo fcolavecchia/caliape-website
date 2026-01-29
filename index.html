@@ -324,7 +324,10 @@ if (betaForm) {
         const transient = status === 429 || status >= 500;
 
         // Log útil (antes del throw)
-        console.error('Edge error:', { status, data });
+        console.error('Edge error details:', {
+        status: resp.status,
+        data
+        });
 
         if (!transient) {
             // 4xx: error “definitivo” (payload/validación)
@@ -340,8 +343,8 @@ if (betaForm) {
         if (i === attempts - 1) break;
 
         // Backoff + mensaje
-        const backoff = [300, 900, 2000][i] ?? 2500;
-        messageDiv.textContent = `Problema de conexión. Reintentando… (${attemptNo}/${attempts})`;
+        const backoff = [300, 900, 2000][i] ?? 2500;        
+        messageDiv.textContent = `Problema de conexión (${e?.message || e}). Reintentando… (${attemptNo}/${attempts})`;
         messageDiv.className = 'beta-form-message';
 
         await sleep(backoff);
@@ -355,18 +358,21 @@ if (betaForm) {
 
     const edgeURL = "https://cjwyjqklzrufnbtnzxfa.supabase.co/functions/v1/forward-to-google-form";
 
+    const norm = (v) => (v ?? '').toString().trim();
+
     const payload = {
-    nombre,
-    apellido,
-    email,
-    especialidad,
-    hospital,
-    lugar,
-    referido,
-    edad,
-    telefono,
-    matricula,
+    nombre: norm(nombre),
+    apellido: norm(apellido),
+    email: norm(email),
+    especialidad: norm(especialidad),
+    hospital: norm(hospital),
+    lugar: norm(lugar),
+    referido: norm(referido),
+    edad: norm(edad),
+    telefono: norm(telefono),
+    matricula: norm(matricula),
     };
+
 
     // --- UI: bloquear submit mientras envía ---
     const submitBtn = betaForm.querySelector('button[type="submit"]');
@@ -376,27 +382,27 @@ if (betaForm) {
     messageDiv.className = 'beta-form-message';
 
     try {
-    const { data } = await postLeadWithRetry(edgeURL, payload, 3);
+        const { data } = await postLeadWithRetry(edgeURL, payload, 3);
 
-    messageDiv.textContent = '¡Gracias! Tu solicitud fue enviada.';
-    messageDiv.className = 'beta-form-message success';
-    console.log('Solicitud enviada con éxito:', data);
+        messageDiv.textContent = '¡Gracias! Tu solicitud fue enviada.';
+        messageDiv.className = 'beta-form-message success';
+        console.log('Solicitud enviada con éxito:', data);
 
-    betaForm.reset();
+        betaForm.reset();
     } catch (err) {
-    console.error('Submit failed:', err);
+        console.error('Submit failed:', err);
 
-    // Mensaje más humano: si fue abort/timeout, decilo
-    const msg =
-        (err && String(err).toLowerCase().includes('abort'))
-        ? 'La conexión tardó demasiado. Probá de nuevo.'
-        : 'No pudimos enviar la solicitud. Probá de nuevo.';
+        // Mensaje más humano: si fue abort/timeout, decilo
+        const msg =
+            (err && String(err).toLowerCase().includes('abort'))
+            ? 'La conexión tardó demasiado. Probá de nuevo.'
+            : 'No pudimos enviar la solicitud. Probá de nuevo.';
 
-    messageDiv.textContent = msg;
-    messageDiv.className = 'beta-form-message error';
+        messageDiv.textContent = msg;
+        messageDiv.className = 'beta-form-message error';
     } finally {
     // Volver a habilitar (tu lógica de checkValidity lo va a ajustar igual)
-    if (submitBtn) submitBtn.disabled = false;
+        if (submitBtn) submitBtn.disabled = false;
     }
 
 
