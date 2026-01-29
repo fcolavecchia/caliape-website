@@ -69,12 +69,16 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 placeholder="Apellido"
                 required
                 aria-label="Apellido">
-            <input 
-                type="email" 
-                name="email" 
-                placeholder="Email profesional"
+            <input
+                type="email"
+                name="email"
+                placeholder="Email del teléfono (Apple ID / Google)"
                 required
-                aria-label="Email profesional">
+                aria-label="Email del teléfono">
+                <!-- <p class="form-helper-text" id="emailHelpText">
+                Usá el email con el que tenés logueado tu teléfono.  
+                Es el que necesitamos para darte acceso a la app.
+                </p>                 -->
             <input 
                 type="text" 
                 name="especialidad" 
@@ -93,17 +97,19 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 placeholder="Ciudad, provincia, país"
                 required
                 aria-label="Ciudad, provincia, país">
-            <p class="form-helper-text">Cómo te enteraste de Calíape? *</p>
-            <select name="referido" aria-label="Cómo te enteraste de Calíape?" required aria-required="true">
-                <option value="" disabled selected hidden>Seleccioná una opción</option>
-                <option value="LinkedIn">LinkedIn</option>
-                <option value="Otras redes sociales">Otras redes sociales</option>
-                <option value="Noticias (web, diarios, streaming, radio, etc.)">Noticias (web, diarios, streaming, radio, etc.)</option>
-                <option value="Congreso o evento médico">Congreso o evento médico</option>
-                <option value="Referido por colegas">Referido por colegas</option>
-                <!-- <option value="Artículo o blog">Artículo o blog</option> -->
-                <option value="Otro">Otro</option>
-            </select>
+            <!-- <div class="field-reading-order"> -->
+                <p class="form-helper-text">Cómo te enteraste de Calíape? *</p>
+                <select name="referido" aria-label="Cómo te enteraste de Calíape?" required aria-required="true">
+                    <option value="" disabled selected hidden>Seleccioná una opción</option>
+                    <option value="LinkedIn">LinkedIn</option>
+                    <option value="Otras redes sociales">Otras redes sociales</option>
+                    <option value="Noticias (web, diarios, streaming, radio, etc.)">Noticias (web, diarios, streaming, radio, etc.)</option>
+                    <option value="Congreso o evento médico">Congreso o evento médico</option>
+                    <option value="Referido por colegas">Referido por colegas</option>
+                    <!-- <option value="Artículo o blog">Artículo o blog</option> -->
+                    <option value="Otro">Otro</option>
+                </select>
+            <!-- </div> -->
             
             <h3 class="form-section-title">Datos opcionales</h3>
             <input 
@@ -267,6 +273,86 @@ if (betaForm) {
     //     messageDiv.className = 'beta-form-message error';
     //     betaForm.reset();
     // });
+
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    async function fetchJsonWithTimeout(url, options, timeoutMs = 8000) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+        const resp = await fetch(url, { ...options, signal: controller.signal });
+
+        // Intentar parsear JSON pero sin romper si no hay body/JSON
+        let data = {};
+        const ct = resp.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+        data = await resp.json().catch(() => ({}));
+        } else {
+        // a veces viene vacío o text/html: guardamos texto para debug
+        const text = await resp.text().catch(() => '');
+        data = text ? { raw: text } : {};
+        }
+
+        return { resp, data };
+    } finally {
+        clearTimeout(timeout);
+    }
+    }
+
+    async function postLeadWithRetry(edgeURL, payload, attempts = 3) {
+    let lastErr;
+
+    for (let i = 0; i < attempts; i++) {
+        const attemptNo = i + 1;
+
+        try {
+        const { resp, data } = await fetchJsonWithTimeout(
+            edgeURL,
+            {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            },
+            8000
+        );
+
+        if (resp.ok && data && data.ok) return { resp, data };
+
+        // Determinar si vale reintentar
+        const status = resp.status;
+        const transient = status === 429 || status >= 500;
+
+        // Log útil (antes del throw)
+        console.error('Edge error:', { status, data });
+
+        if (!transient) {
+            // 4xx: error “definitivo” (payload/validación)
+            throw new Error(data?.error || `Error ${status}`);
+        }
+
+        // Transitorio: reintentar
+        throw new Error(`Transitorio ${status}`);
+        } catch (e) {
+        lastErr = e;
+
+        // Si es el último intento, cortar
+        if (i === attempts - 1) break;
+
+        // Backoff + mensaje
+        const backoff = [300, 900, 2000][i] ?? 2500;
+        messageDiv.textContent = `Problema de conexión. Reintentando… (${attemptNo}/${attempts})`;
+        messageDiv.className = 'beta-form-message';
+
+        await sleep(backoff);
+        }
+    }
+
+    throw lastErr;
+    }
+
+
+
     const edgeURL = "https://cjwyjqklzrufnbtnzxfa.supabase.co/functions/v1/forward-to-google-form";
 
     const payload = {
@@ -282,28 +368,62 @@ if (betaForm) {
     matricula,
     };
 
+    // --- UI: bloquear submit mientras envía ---
+    const submitBtn = betaForm.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    messageDiv.textContent = 'Enviando solicitud…';
+    messageDiv.className = 'beta-form-message';
+
     try {
-    const resp = await fetch(edgeURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-    });
+    const { data } = await postLeadWithRetry(edgeURL, payload, 3);
 
-    const data = await resp.json();
+    messageDiv.textContent = '¡Gracias! Tu solicitud fue enviada.';
+    messageDiv.className = 'beta-form-message success';
+    console.log('Solicitud enviada con éxito:', data);
 
-    if (!resp.ok || !data.ok) {
-        throw new Error("Forward failed");
-    }
-
-    messageDiv.textContent = "¡Gracias! Tu solicitud fue enviada.";
-    messageDiv.className = "beta-form-message success";
     betaForm.reset();
     } catch (err) {
-    console.error(err);
-    messageDiv.textContent =
-        "No pudimos enviar la solicitud. Probá de nuevo.";
-    messageDiv.className = "beta-form-message error";
+    console.error('Submit failed:', err);
+
+    // Mensaje más humano: si fue abort/timeout, decilo
+    const msg =
+        (err && String(err).toLowerCase().includes('abort'))
+        ? 'La conexión tardó demasiado. Probá de nuevo.'
+        : 'No pudimos enviar la solicitud. Probá de nuevo.';
+
+    messageDiv.textContent = msg;
+    messageDiv.className = 'beta-form-message error';
+    } finally {
+    // Volver a habilitar (tu lógica de checkValidity lo va a ajustar igual)
+    if (submitBtn) submitBtn.disabled = false;
     }
+
+
+    // try {
+    // const resp = await fetch(edgeURL, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(payload),
+    // });
+
+    // const data = await resp.json();
+
+    // if (!resp.ok || !data.ok) {
+    //     throw new Error("Falló el envío a Google Forms");
+    //     console.error("Error response:", resp, "Data:", data);
+    // }
+
+    // messageDiv.textContent = "¡Gracias! Tu solicitud fue enviada.";
+    // messageDiv.className = "beta-form-message success";
+    // console.log("Solicitud enviada con éxito:", data);
+    // betaForm.reset();
+    // } catch (err) {
+    // console.error(err);
+    // messageDiv.textContent =
+    //     "No pudimos enviar la solicitud. Probá de nuevo.";
+    // messageDiv.className = "beta-form-message error";
+    // }
 
 
 
