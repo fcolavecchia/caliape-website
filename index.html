@@ -260,22 +260,7 @@ if (betaForm) {
         return;
     }
 
-    // fetch(googleFormURL, {
-    //     method: 'POST',
-    //     mode: 'no-cors',
-    //     headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded'
-    //     },
-    //     body: formBody
-    // }).then(() => {
-    //     messageDiv.textContent = '¡Gracias! Tu solicitud ha sido enviada correctamente.';
-    //     messageDiv.className = 'beta-form-message success';
-    //     betaForm.reset();
-    // }).catch(() => {
-    //     messageDiv.textContent = 'Hemos tenido un problema al recibir tu solicitud.';
-    //     messageDiv.className = 'beta-form-message error';
-    //     betaForm.reset();
-    // });
+
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -376,6 +361,11 @@ if (betaForm) {
     matricula: norm(matricula),
     };
 
+    if (!payload.referido) {
+    messageDiv.textContent = 'Seleccioná cómo te enteraste de Calíape.';
+    messageDiv.className = 'beta-form-message error';
+    return;
+    }    
 
     // --- UI: bloquear submit mientras envía ---
     const submitBtn = betaForm.querySelector('button[type="submit"]');
