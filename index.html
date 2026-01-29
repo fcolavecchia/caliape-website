@@ -98,17 +98,24 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 required
                 aria-label="Ciudad, provincia, país">
             <!-- <div class="field-reading-order"> -->
-                <p class="form-helper-text">Cómo te enteraste de Calíape? *</p>
+            <p class="form-helper-text">Cómo te enteraste de Calíape? *</p>
                 <select name="referido" aria-label="Cómo te enteraste de Calíape?" required aria-required="true">
                     <option value="" disabled selected hidden>Seleccioná una opción</option>
                     <option value="LinkedIn">LinkedIn</option>
                     <option value="Otras redes sociales">Otras redes sociales</option>
                     <option value="Noticias (web, diarios, streaming, radio, etc.)">Noticias (web, diarios, streaming, radio, etc.)</option>
                     <option value="Congreso o evento médico">Congreso o evento médico</option>
-                    <option value="Referido por colegas">Referido por colegas</option>
+                    <option value="Referido por colega">Referido por colega</option>
                     <!-- <option value="Artículo o blog">Artículo o blog</option> -->
                     <option value="Otro">Otro</option>
                 </select>
+
+            <input
+            type="text"
+            name="referido_colega"
+            placeholder="Nombre del colega (opcional)"
+            style="display:none;"
+            aria-label="Nombre del colega que te refirió">                
             <!-- </div> -->
             
             <h3 class="form-section-title">Datos opcionales</h3>
@@ -195,6 +202,26 @@ const betaForm = document.getElementById('betaForm');
 const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 const testMode = isLocalhost && window.BETA_FORM_TEST_MODE !== false;
 
+const selectReferido = betaForm?.querySelector('select[name="referido"]');
+const inputColega = betaForm?.querySelector('input[name="referido_colega"]');
+
+function toggleColegaField() {
+  if (!selectReferido || !inputColega) return;
+
+  const v = (selectReferido.value || '').trim();
+  const show = v === 'Referido por colega';
+
+  inputColega.style.display = show ? 'block' : 'none';
+  inputColega.required = false; // opcional
+  if (!show) inputColega.value = '';
+}
+
+if (selectReferido && inputColega) {
+  selectReferido.addEventListener('change', toggleColegaField);
+  toggleColegaField();
+}
+
+
 if (betaForm) {
     betaForm.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -222,7 +249,8 @@ if (betaForm) {
     // const referido = formData.get('referido') || '';
 
     const referido = betaForm.querySelector('select[name="referido"]')?.value || '';
-    
+    const referido_colega = (formData.get('referido_colega') || '').toString().trim();
+
 
     // URL del Google Form con tu Form ID
     const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSckceahCPzytS7G-rBsJo3TEN2jTFmSAFl-dDLOEqR-E4_8gQ/formResponse';
@@ -346,6 +374,20 @@ if (betaForm) {
 
     const edgeURL = "https://cjwyjqklzrufnbtnzxfa.supabase.co/functions/v1/forward-to-google-form";
 
+// https://docs.google.com/forms/d/e/1FAIpQLSckceahCPzytS7G-rBsJo3TEN2jTFmSAFl-dDLOEqR-E4_8gQ/viewform?usp=pp_url
+// entry.213742462=email
+// entry.1239758288=nombre
+// entry.1589314304=apellido
+// entry.678704696=especialidad
+// entry.1737286529=hospital
+// entry.1901642424=lugar
+// entry.1505268358=LinkedIn
+// entry.1002181386=colega
+// entry.2118862770=matricula
+// entry.980961395=telefono
+// entry.583972878=edad
+
+
     const norm = (v) => (v ?? '').toString().trim();
 
     const payload = {
@@ -359,6 +401,7 @@ if (betaForm) {
     edad: norm(edad),
     telefono: norm(telefono),
     matricula: norm(matricula),
+    referido_colega: norm(referido_colega)
     };
 
     if (!payload.referido) {
