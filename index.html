@@ -219,7 +219,10 @@ if (betaForm) {
     const telefono = formData.get('telefono') || '';
     const hospital = formData.get('hospital') || '';
     const lugar = formData.get('lugar') || '';
-    const referido = formData.get('referido') || '';
+    // const referido = formData.get('referido') || '';
+
+    const referido = betaForm.querySelector('select[name="referido"]')?.value || '';
+    
 
     // URL del Google Form con tu Form ID
     const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSckceahCPzytS7G-rBsJo3TEN2jTFmSAFl-dDLOEqR-E4_8gQ/formResponse';
