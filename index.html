@@ -190,7 +190,7 @@ const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname
 const testMode = isLocalhost && window.BETA_FORM_TEST_MODE !== false;
 
 if (betaForm) {
-    betaForm.addEventListener('submit', function(e) {
+    betaForm.addEventListener('submit', async function(e) {
     e.preventDefault();
 
     if (!betaForm.checkValidity()) {
@@ -251,22 +251,64 @@ if (betaForm) {
         return;
     }
 
-    fetch(googleFormURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: formBody
-    }).then(() => {
-        messageDiv.textContent = '¡Gracias! Tu solicitud ha sido enviada correctamente.';
-        messageDiv.className = 'beta-form-message success';
-        betaForm.reset();
-    }).catch(() => {
-        messageDiv.textContent = 'Gracias por tu interés. Nos pondremos en contacto pronto.';
-        messageDiv.className = 'beta-form-message success';
-        betaForm.reset();
+    // fetch(googleFormURL, {
+    //     method: 'POST',
+    //     mode: 'no-cors',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body: formBody
+    // }).then(() => {
+    //     messageDiv.textContent = '¡Gracias! Tu solicitud ha sido enviada correctamente.';
+    //     messageDiv.className = 'beta-form-message success';
+    //     betaForm.reset();
+    // }).catch(() => {
+    //     messageDiv.textContent = 'Hemos tenido un problema al recibir tu solicitud.';
+    //     messageDiv.className = 'beta-form-message error';
+    //     betaForm.reset();
+    // });
+    const edgeURL = "https://cjwyjqklzrufnbtnzxfa.supabase.co/functions/v1/forward-to-google-form";
+
+    const payload = {
+    nombre,
+    apellido,
+    email,
+    especialidad,
+    hospital,
+    lugar,
+    referido,
+    edad,
+    telefono,
+    matricula,
+    };
+
+    try {
+    const resp = await fetch(edgeURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
     });
+
+    const data = await resp.json();
+
+    if (!resp.ok || !data.ok) {
+        throw new Error("Forward failed");
+    }
+
+    messageDiv.textContent = "¡Gracias! Tu solicitud fue enviada.";
+    messageDiv.className = "beta-form-message success";
+    betaForm.reset();
+    } catch (err) {
+    console.error(err);
+    messageDiv.textContent =
+        "No pudimos enviar la solicitud. Probá de nuevo.";
+    messageDiv.className = "beta-form-message error";
+    }
+
+
+
+
+
     });
 }
 
