@@ -346,9 +346,12 @@ header {
     opacity: 0.8;
     margin: 0;
     /* padding: 0.75rem 1rem; */
-    text-align: right;
+    text-align: left;
     display: flex;
     align-items: center;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .beta-form input[type="text"],
@@ -372,6 +375,7 @@ header {
     background-repeat: no-repeat;
     background-position: right 1rem center;
     padding-right: 2.5rem;
+    /* background-color: #263c2a; */
 }
 
 .beta-form select option[disabled] {

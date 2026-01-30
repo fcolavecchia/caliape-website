@@ -88,19 +88,26 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
             <input 
                 type="text" 
                 name="hospital" 
-                placeholder="Institución donde trabajás habitualmente"
+                placeholder="Institución donde trabaja habitualmente"
                 required
-                aria-label="Institución donde trabajás habitualmente">
+                aria-label="Institución donde trabaja habitualmente">
             <input 
                 type="text" 
                 name="lugar" 
                 placeholder="Ciudad, provincia, país"
                 required
                 aria-label="Ciudad, provincia, país">
+            <p class="form-helper-text">¿Qué celular usa? *</p>
+            <select name="celu_so" aria-label="¿Qué celular usa?" required aria-required="true">
+                <option value="" disabled selected hidden>Seleccione una opción</option>
+                
+                <option value="Apple">Apple</option>
+                <option value="Android">Android</option>
+            </select>
             <!-- <div class="field-reading-order"> -->
-            <p class="form-helper-text">Cómo te enteraste de Calíape? *</p>
-                <select name="referido" aria-label="Cómo te enteraste de Calíape?" required aria-required="true">
-                    <option value="" disabled selected hidden>Seleccioná una opción</option>
+            <p class="form-helper-text">¿Cómo se enteró de Calíape? *</p>
+                <select name="referido" aria-label="Cómo se enteró de Calíape?" required aria-required="true">
+                    <option value="" disabled selected hidden>Seleccione una opción</option>
                     <option value="LinkedIn">LinkedIn</option>
                     <option value="Otras redes sociales">Otras redes sociales</option>
                     <option value="Noticias (web, diarios, streaming, radio, etc.)">Noticias (web, diarios, streaming, radio, etc.)</option>
@@ -108,8 +115,7 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                     <option value="Referido por colega">Referido por colega</option>
                     <!-- <option value="Artículo o blog">Artículo o blog</option> -->
                     <option value="Otro">Otro</option>
-                </select>
-
+                </select>                
             <input
             type="text"
             name="referido_colega"
@@ -127,7 +133,7 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
             <div class="input-with-tooltip">
                 <span class="tooltip-icon" tabindex="0">
                     ?
-                    <span class="tooltip-text">Es el número de registro profesional otorgado por el colegio o consejo profesional de tu jurisdicción.</span>
+                    <span class="tooltip-text">Es el número de registro profesional otorgado por el colegio o consejo profesional de su jurisdicción.</span>
                 </span>
                 <input 
                     type="text" 
@@ -135,11 +141,11 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                     placeholder="Matrícula profesional"
                     aria-label="Matrícula profesional">
             </div>            
-            <p class="form-helper-text">Recibí las noticias de Calíape en WhatsApp: </p>
+            <p class="form-helper-text">Comuníquese con Calíape en WhatsApp: </p>
             <div class="input-with-tooltip">
                 <span class="tooltip-icon" tabindex="1">
                     ?
-                    <span class="tooltip-text">Incluí el código de país y área. <br>Ejemplo: +54 9 11 1234-5678</span>
+                    <span class="tooltip-text">Incluya el código de país y área. <br>Ejemplo: +54 9 11 1234-5678</span>
                 </span>                
                 <input 
                 type="tel" 
@@ -148,7 +154,7 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 aria-label="Celular">                
             </div>
             
-            <button type="submit" disabled>Solicitar acceso beta</button>
+            <button type="submit" disabled>Solicite acceso beta</button>
             <p class="form-disclaimer">No compartiremos esta información con terceros con ningún fin.</p>
         </form>
         <div id="betaTestPanel" style="display:none; margin-top: 1rem; text-align: center;">
@@ -204,6 +210,7 @@ const testMode = isLocalhost && window.BETA_FORM_TEST_MODE !== false;
 
 const selectReferido = betaForm?.querySelector('select[name="referido"]');
 const inputColega = betaForm?.querySelector('input[name="referido_colega"]');
+const selectCeluSo = betaForm?.querySelector('select[name="celu_so"]') || null;
 
 function toggleColegaField() {
   if (!selectReferido || !inputColega) return;
@@ -264,7 +271,8 @@ if (betaForm) {
         'entry.678704696': especialidad,
         'entry.1737286529': hospital,
         'entry.1901642424': lugar,
-        'entry.1505268358': referido
+        'entry.1505268358': referido,
+        'entry.533519866': selectCeluSo ? selectCeluSo.value : ''
     });
 
     const addIfValue = (entryId, value) => {
@@ -277,6 +285,7 @@ if (betaForm) {
     addIfValue('entry.583972878', edad);
     addIfValue('entry.980961395', telefono);
     addIfValue('entry.2118862770', matricula);
+    addIfValue('entry.1002181386', referido_colega);
     
     const messageDiv = document.getElementById('formMessage');
     
@@ -381,8 +390,9 @@ if (betaForm) {
 // entry.678704696=especialidad
 // entry.1737286529=hospital
 // entry.1901642424=lugar
-// entry.1505268358=LinkedIn
-// entry.1002181386=colega
+// entry.533519866=celu_so 
+// entry.1505268358=Otro
+// entry.1002181386=referido_colega
 // entry.2118862770=matricula
 // entry.980961395=telefono
 // entry.583972878=edad
@@ -401,7 +411,8 @@ if (betaForm) {
     edad: norm(edad),
     telefono: norm(telefono),
     matricula: norm(matricula),
-    referido_colega: norm(referido_colega)
+    referido_colega: norm(referido_colega),
+    celu_so: norm(selectCeluSo ? selectCeluSo.value : '')
     };
 
     if (!payload.referido) {
@@ -506,7 +517,9 @@ const baseRequired = {
     especialidad: 'Gastroenterología',
     hospital: 'Hospital Central',
     lugar: 'CABA, Argentina',
-    referido: 'LinkedIn'
+    referido: 'LinkedIn',
+    celu_so: 'Apple',
+    referido_colega: ''
 };
 
 const testCases = {
@@ -523,13 +536,38 @@ const testCases = {
         referido: 'LinkedIn',
         edad: '38',
         telefono: '+54 9 11 1234-5678',
-        matricula: 'MP-12345'
+        matricula: 'MP-12345',
+        referido_colega: 'Dr. Test Referente',
+        celu_so: 'Android'
     },
     whitespaceOptional: {
         ...baseRequired,
         edad: '   ',
         telefono: '   ',
-        matricula: '   '
+        matricula: '   ',
+        referido_colega: '   '
+    },
+    referidoPorColega: {
+        ...baseRequired,
+        referido: 'Referido por colega',
+        referido_colega: 'Dra. Test Colega',
+        edad: '',
+        telefono: '',
+        matricula: ''
+    },
+    appleUser: {
+        ...baseRequired,
+        celu_so: 'Apple',
+        edad: '45',
+        telefono: '+54 9 11 2222-3333',
+        matricula: 'MP-99999'
+    },
+    androidUser: {
+        ...baseRequired,
+        celu_so: 'Android',
+        edad: '50',
+        telefono: '+54 9 11 4444-5555',
+        matricula: 'MP-88888'
     }
 };
 
@@ -561,6 +599,35 @@ if (isLocalhost) {
     const allBtn = document.getElementById('betaTestAllFields');
     const whitespaceBtn = document.getElementById('betaTestWhitespace');
     const runAllBtn = document.getElementById('betaTestRunAll');
+
+    // Botones adicionales para nuevos tests
+    let extraTestPanel = document.getElementById('betaTestExtraPanel');
+    if (!extraTestPanel) {
+        extraTestPanel = document.createElement('div');
+        extraTestPanel.id = 'betaTestExtraPanel';
+        extraTestPanel.style.marginTop = '0.5rem';
+        extraTestPanel.style.display = 'flex';
+        extraTestPanel.style.flexWrap = 'wrap';
+        extraTestPanel.style.gap = '0.5rem';
+        extraTestPanel.style.justifyContent = 'center';
+        panel.appendChild(extraTestPanel);
+    }
+    const addTestBtn = (id, label, caseName) => {
+        let btn = document.getElementById(id);
+        if (!btn) {
+            btn = document.createElement('button');
+            btn.type = 'button';
+            btn.id = id;
+            btn.className = 'btn btn-secondary';
+            btn.textContent = label;
+            btn.addEventListener('click', () => window.runBetaTestCase(caseName));
+            extraTestPanel.appendChild(btn);
+        }
+    };
+    addTestBtn('betaTestReferidoColega', 'Test: referido por colega', 'referidoPorColega');
+    addTestBtn('betaTestApple', 'Test: usuario Apple', 'appleUser');
+    addTestBtn('betaTestAndroid', 'Test: usuario Android', 'androidUser');
+
     if (requiredBtn) requiredBtn.addEventListener('click', () => window.runBetaTestCase('requiredOnly'));
     if (allBtn) allBtn.addEventListener('click', () => window.runBetaTestCase('allFields'));
     if (whitespaceBtn) whitespaceBtn.addEventListener('click', () => window.runBetaTestCase('whitespaceOptional'));
