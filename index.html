@@ -51,9 +51,10 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
 <!-- Sección de invitación a pruebas beta -->
 <section id="beta" class="beta-invite">
     <div class="container">
-        <h2>Unite a nuestra prueba beta</h2>
-        <p>¿Sos profesional de la salud interesado en transformar tu consulta médica? 
-           Sumate a nuestra prueba beta exclusiva y sé de los primeros en experimentar Calíape.</p>
+        <h2>Participe de nuestra prueba de validación</h2>
+        <p>¿Profesional de la salud interesado en transformar tu consulta médica?</p>
+        <p>Únase a nuestra prueba exclusiva y experimente Calíape.</p>
+           
         
         <form class="beta-form" id="betaForm">
             <h3 class="form-section-title">Datos requeridos</h3>
@@ -97,15 +98,17 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 placeholder="Ciudad, provincia, país"
                 required
                 aria-label="Ciudad, provincia, país">
-            <p class="form-helper-text">¿Qué celular usa? *</p>
+            <div class="field-reading-order">                
+            <p class="form-helper-text">¿Qué celular usa? </p>
             <select name="celu_so" aria-label="¿Qué celular usa?" required aria-required="true">
                 <option value="" disabled selected hidden>Seleccione una opción</option>
                 
                 <option value="Apple">Apple</option>
                 <option value="Android">Android</option>
             </select>
-            <!-- <div class="field-reading-order"> -->
-            <p class="form-helper-text">¿Cómo se enteró de Calíape? *</p>
+            </div>
+            <div class="field-reading-order">
+            <p class="form-helper-text">¿Cómo se enteró de Calíape?</p>
                 <select name="referido" aria-label="Cómo se enteró de Calíape?" required aria-required="true">
                     <option value="" disabled selected hidden>Seleccione una opción</option>
                     <option value="LinkedIn">LinkedIn</option>
@@ -116,13 +119,15 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                     <!-- <option value="Artículo o blog">Artículo o blog</option> -->
                     <option value="Otro">Otro</option>
                 </select>                
-            <input
-            type="text"
-            name="referido_colega"
-            placeholder="Nombre del colega (opcional)"
-            style="display:none;"
-            aria-label="Nombre del colega que te refirió">                
-            <!-- </div> -->
+            </div>
+            <div class="field-reading-order" id="fieldReferidoColega" style="display:none;">
+                <p class="form-helper-text">¿Quién lo refirió?</p>
+                <input
+                    type="text"
+                    name="referido_colega"
+                    placeholder="Nombre del colega"
+                    aria-label="Nombre del colega que te refirió">
+            </div>
             
             <h3 class="form-section-title">Datos opcionales</h3>
             <input 
@@ -141,6 +146,7 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                     placeholder="Matrícula profesional"
                     aria-label="Matrícula profesional">
             </div>            
+            <div class="field-reading-order">
             <p class="form-helper-text">Comuníquese con Calíape en WhatsApp: </p>
             <div class="input-with-tooltip">
                 <span class="tooltip-icon" tabindex="1">
@@ -152,6 +158,7 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 name="telefono" 
                 placeholder="Celular"
                 aria-label="Celular">                
+            </div>
             </div>
             
             <button type="submit" disabled>Solicite acceso beta</button>
@@ -212,15 +219,15 @@ const selectReferido = betaForm?.querySelector('select[name="referido"]');
 const inputColega = betaForm?.querySelector('input[name="referido_colega"]');
 const selectCeluSo = betaForm?.querySelector('select[name="celu_so"]') || null;
 
+
 function toggleColegaField() {
-  if (!selectReferido || !inputColega) return;
-
-  const v = (selectReferido.value || '').trim();
-  const show = v === 'Referido por colega';
-
-  inputColega.style.display = show ? 'block' : 'none';
-  inputColega.required = false; // opcional
-  if (!show) inputColega.value = '';
+    if (!selectReferido || !inputColega) return;
+    const v = (selectReferido.value || '').trim();
+    const show = v === 'Referido por colega';
+    const fieldDiv = document.getElementById('fieldReferidoColega');
+    if (fieldDiv) fieldDiv.style.display = show ? 'grid' : 'none';
+    inputColega.required = false; // opcional
+    if (!show) inputColega.value = '';
 }
 
 if (selectReferido && inputColega) {
