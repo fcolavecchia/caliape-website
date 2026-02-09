@@ -264,6 +264,10 @@ header {
     gap: 1rem;
 }
 
+.beta-form .field-full {
+    grid-column: 1 / -1;
+}
+
 .form-section-title {
     grid-column: 1 / -1;
     font-size: 1.1rem;

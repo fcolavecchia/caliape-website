@@ -58,6 +58,17 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
         
         <form class="beta-form" id="betaForm">
             <h3 class="form-section-title">Datos requeridos</h3>
+            <input
+                type="email"
+                name="email"
+                class="field-full"
+                placeholder="Email del teléfono (Apple ID / Google)"
+                required
+                aria-label="Email del teléfono">
+                <!-- <p class="form-helper-text" id="emailHelpText">
+                Usá el email con el que tenés logueado tu teléfono.  
+                Es el que necesitamos para darte acceso a la app.
+                </p>                 -->            
             <input 
                 type="text" 
                 name="nombre" 
@@ -69,35 +80,25 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 name="apellido" 
                 placeholder="Apellido"
                 required
-                aria-label="Apellido">
-            <input
-                type="email"
-                name="email"
-                placeholder="Email del teléfono (Apple ID / Google)"
-                required
-                aria-label="Email del teléfono">
-                <!-- <p class="form-helper-text" id="emailHelpText">
-                Usá el email con el que tenés logueado tu teléfono.  
-                Es el que necesitamos para darte acceso a la app.
-                </p>                 -->
+                aria-label="Apellido">            
             <input 
                 type="text" 
                 name="especialidad" 
                 placeholder="Especialidad médica"
                 required
-                aria-label="Especialidad médica">
-            <input 
-                type="text" 
-                name="hospital" 
-                placeholder="Institución donde trabaja habitualmente"
-                required
-                aria-label="Institución donde trabaja habitualmente">
-            <input 
-                type="text" 
-                name="lugar" 
-                placeholder="Ciudad, provincia, país"
-                required
-                aria-label="Ciudad, provincia, país">
+                aria-label="Especialidad médica">            
+            <div class="input-with-tooltip">
+                <input 
+                    type="text" 
+                    name="matricula" 
+                    placeholder="Matrícula profesional"
+                    required
+                    aria-label="Matrícula profesional">
+                <span class="tooltip-icon" tabindex="0">
+                    ?
+                    <span class="tooltip-text">Es el número de registro profesional otorgado por el colegio o consejo profesional de su jurisdicción.</span>
+                </span>
+            </div>                            
             <div class="field-reading-order">                
             <p class="form-helper-text">¿Qué celular usa? </p>
             <select name="celu_so" aria-label="¿Qué celular usa?" required aria-required="true">
@@ -106,10 +107,27 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 <option value="Apple">Apple</option>
                 <option value="Android">Android</option>
             </select>
-            </div>
-            <div class="field-reading-order">
+            </div>            
+            
+            <h3 class="form-section-title">Datos opcionales</h3>
+            <input 
+                type="text" 
+                name="edad" 
+                placeholder="Edad"
+                aria-label="Edad">
+            <input 
+                type="text" 
+                name="hospital" 
+                placeholder="Institución donde trabaja habitualmente"
+                aria-label="Institución donde trabaja habitualmente">
+            <input 
+                type="text" 
+                name="lugar" 
+                placeholder="Ciudad, provincia, país"
+                aria-label="Ciudad, provincia, país">  
+            <div class="field-reading-order">                
             <p class="form-helper-text">¿Cómo se enteró de Calíape?</p>
-                <select name="referido" aria-label="Cómo se enteró de Calíape?" required aria-required="true">
+                <select name="referido" aria-label="Cómo se enteró de Calíape?">
                     <option value="" disabled selected hidden>Seleccione una opción</option>
                     <option value="LinkedIn">LinkedIn</option>
                     <option value="Otras redes sociales">Otras redes sociales</option>
@@ -127,41 +145,22 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                     name="referido_colega"
                     placeholder="Nombre del colega"
                     aria-label="Nombre del colega que te refirió">
-            </div>
-            
-            <h3 class="form-section-title">Datos opcionales</h3>
-            <input 
-                type="text" 
-                name="edad" 
-                placeholder="Edad"
-                aria-label="Edad">
-            <div class="input-with-tooltip">
-                <span class="tooltip-icon" tabindex="0">
-                    ?
-                    <span class="tooltip-text">Es el número de registro profesional otorgado por el colegio o consejo profesional de su jurisdicción.</span>
-                </span>
-                <input 
-                    type="text" 
-                    name="matricula" 
-                    placeholder="Matrícula profesional"
-                    aria-label="Matrícula profesional">
-            </div>            
+            </div>                              
             <div class="field-reading-order">
             <p class="form-helper-text">Comuníquese con Calíape en WhatsApp: </p>
             <div class="input-with-tooltip">
-                <span class="tooltip-icon" tabindex="1">
-                    ?
-                    <span class="tooltip-text">Incluya el código de país y área. <br>Ejemplo: +54 9 11 1234-5678</span>
-                </span>                
                 <input 
                 type="tel" 
                 name="telefono" 
                 placeholder="Celular"
                 aria-label="Celular">                
+                <span class="tooltip-icon" tabindex="1">
+                    ?
+                    <span class="tooltip-text">Incluya el código de país y área. <br>Ejemplo: +54 9 11 1234-5678</span>
+                </span>
             </div>
-            </div>
-            
-            <button type="submit" disabled>Solicite acceso beta</button>
+            </div>            
+            <button type="submit" disabled>Solicite acceso a la prueba de validación</button>
             <p class="form-disclaimer">No compartiremos esta información con terceros con ningún fin.</p>
         </form>
         <div id="betaTestPanel" style="display:none; margin-top: 1rem; text-align: center;">
@@ -276,8 +275,7 @@ if (betaForm) {
         'entry.1589314304': apellido,
         'entry.213742462': email,
         'entry.678704696': especialidad,
-        'entry.1737286529': hospital,
-        'entry.1901642424': lugar,
+        'entry.2118862770': matricula,        
         'entry.1505268358': referido,
         'entry.533519866': selectCeluSo ? selectCeluSo.value : ''
     });
@@ -289,9 +287,10 @@ if (betaForm) {
 
     };
 
+    addIfValue('entry.1901642424', lugar);
+    addIfValue('entry.1737286529', hospital);
     addIfValue('entry.583972878', edad);
     addIfValue('entry.980961395', telefono);
-    addIfValue('entry.2118862770', matricula);
     addIfValue('entry.1002181386', referido_colega);
     
     const messageDiv = document.getElementById('formMessage');
@@ -404,6 +403,21 @@ if (betaForm) {
 // entry.980961395=telefono
 // entry.583972878=edad
 
+// https://docs.google.com/forms/d/e/1FAIpQLSckceahCPzytS7G-rBsJo3TEN2jTFmSAFl-dDLOEqR-E4_8gQ/viewform?usp=pp_url
+// entry.213742462=email
+// entry.1239758288=nombre
+// entry.1589314304=apellido
+// entry.678704696=especialidad
+// entry.2118862770=matricula
+// entry.533519866=Android
+// entry.1505268358=Referido+por+colega
+// entry.1002181386=referido
+// entry.1737286529=hospital
+// entry.1901642424=lugar
+// entry.980961395=telefono
+// entry.583972878=edad
+
+
 
     const norm = (v) => (v ?? '').toString().trim();
 
@@ -422,11 +436,7 @@ if (betaForm) {
     celu_so: norm(selectCeluSo ? selectCeluSo.value : '')
     };
 
-    if (!payload.referido) {
-    messageDiv.textContent = 'Seleccioná cómo te enteraste de Calíape.';
-    messageDiv.className = 'beta-form-message error';
-    return;
-    }    
+    
 
     // --- UI: bloquear submit mientras envía ---
     const submitBtn = betaForm.querySelector('button[type="submit"]');
@@ -521,11 +531,9 @@ const baseRequired = {
     nombre: 'TestNombre',
     apellido: 'TestApellido',
     email: 'test@example.com',
-    especialidad: 'Gastroenterología',
-    hospital: 'Hospital Central',
-    lugar: 'CABA, Argentina',
-    referido: 'LinkedIn',
+    especialidad: 'Kinesiología',
     celu_so: 'Apple',
+    matricula: 'MP-00000',
     referido_colega: ''
 };
 
@@ -533,8 +541,7 @@ const testCases = {
     requiredOnly: {
         ...baseRequired,
         edad: '',
-        telefono: '',
-        matricula: ''
+        telefono: ''
     },
     allFields: {
         ...baseRequired,
@@ -551,7 +558,6 @@ const testCases = {
         ...baseRequired,
         edad: '   ',
         telefono: '   ',
-        matricula: '   ',
         referido_colega: '   '
     },
     referidoPorColega: {
@@ -559,8 +565,7 @@ const testCases = {
         referido: 'Referido por colega',
         referido_colega: 'Dra. Test Colega',
         edad: '',
-        telefono: '',
-        matricula: ''
+        telefono: ''
     },
     appleUser: {
         ...baseRequired,
