@@ -234,6 +234,11 @@ header {
         width: 100%;
     }
 
+:target,
+#validacion {
+  scroll-margin-top: 5rem; /* ajustá según la altura de tu header */
+}
+
 /* Beta Invite Section */
 .beta-invite {
     padding: 5rem 0;
