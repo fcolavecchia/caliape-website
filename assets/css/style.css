@@ -509,15 +509,28 @@ header {
     width: 100%;
     text-align: center;
     margin-top: 1rem;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: block;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    opacity: 0.98;
 }
 
 .beta-form-message.success {
-    color: #28a745;
+    background-color: rgba(40, 167, 69, 0.82);
+    color: #eaedeb;
+    border: 1px solid rgba(243, 245, 243, 0.25);
+    box-shadow: 0 6px 18px rgba(20, 82, 20, 0.06);
 }
 
 .beta-form-message.error {
-    color: var(--accent-color);
+    background-color: rgba(220, 53, 69, 0.82);
+    color: #eaedeb;
+    border: 1px solid rgba(220, 53, 69, 0.18);
+    box-shadow: 0 6px 18px rgba(122, 22, 32, 0.04);
 }
 
 /* CTA Section */

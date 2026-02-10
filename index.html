@@ -112,11 +112,6 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
             <h3 class="form-section-title">Datos opcionales</h3>
             <input 
                 type="text" 
-                name="edad" 
-                placeholder="Edad"
-                aria-label="Edad">
-            <input 
-                type="text" 
                 name="hospital" 
                 placeholder="Institución donde trabaja habitualmente"
                 aria-label="Institución donde trabaja habitualmente">
@@ -254,7 +249,6 @@ if (betaForm) {
     const apellido = formData.get('apellido');
     const email = formData.get('email');
     const especialidad = formData.get('especialidad');
-    const edad = formData.get('edad') || '';
     const matricula = formData.get('matricula') || '';
     const telefono = formData.get('telefono') || '';
     const hospital = formData.get('hospital') || '';
@@ -289,7 +283,6 @@ if (betaForm) {
 
     addIfValue('entry.1901642424', lugar);
     addIfValue('entry.1737286529', hospital);
-    addIfValue('entry.583972878', edad);
     addIfValue('entry.980961395', telefono);
     addIfValue('entry.1002181386', referido_colega);
     
@@ -401,7 +394,6 @@ if (betaForm) {
 // entry.1002181386=referido_colega
 // entry.2118862770=matricula
 // entry.980961395=telefono
-// entry.583972878=edad
 
 // https://docs.google.com/forms/d/e/1FAIpQLSckceahCPzytS7G-rBsJo3TEN2jTFmSAFl-dDLOEqR-E4_8gQ/viewform?usp=pp_url
 // entry.213742462=email
@@ -415,7 +407,6 @@ if (betaForm) {
 // entry.1737286529=hospital
 // entry.1901642424=lugar
 // entry.980961395=telefono
-// entry.583972878=edad
 
 
 
@@ -429,7 +420,6 @@ if (betaForm) {
     hospital: norm(hospital),
     lugar: norm(lugar),
     referido: norm(referido),
-    edad: norm(edad),
     telefono: norm(telefono),
     matricula: norm(matricula),
     referido_colega: norm(referido_colega),
@@ -448,7 +438,7 @@ if (betaForm) {
     try {
         const { data } = await postLeadWithRetry(edgeURL, payload, 3);
 
-        messageDiv.textContent = '¡Gracias! Tu solicitud fue enviada.';
+        messageDiv.textContent = '¡Gracias! Tu solicitud fue enviada. Te contactaremos pronto.';
         messageDiv.className = 'beta-form-message success';
         console.log('Solicitud enviada con éxito:', data);
 
@@ -540,7 +530,6 @@ const baseRequired = {
 const testCases = {
     requiredOnly: {
         ...baseRequired,
-        edad: '',
         telefono: ''
     },
     allFields: {
@@ -548,7 +537,6 @@ const testCases = {
         hospital: 'Hospital Central',
         lugar: 'CABA, Argentina',
         referido: 'LinkedIn',
-        edad: '38',
         telefono: '+54 9 11 1234-5678',
         matricula: 'MP-12345',
         referido_colega: 'Dr. Test Referente',
@@ -556,7 +544,6 @@ const testCases = {
     },
     whitespaceOptional: {
         ...baseRequired,
-        edad: '   ',
         telefono: '   ',
         referido_colega: '   '
     },
@@ -564,20 +551,17 @@ const testCases = {
         ...baseRequired,
         referido: 'Referido por colega',
         referido_colega: 'Dra. Test Colega',
-        edad: '',
         telefono: ''
     },
     appleUser: {
         ...baseRequired,
         celu_so: 'Apple',
-        edad: '45',
         telefono: '+54 9 11 2222-3333',
         matricula: 'MP-99999'
     },
     androidUser: {
         ...baseRequired,
         celu_so: 'Android',
-        edad: '50',
         telefono: '+54 9 11 4444-5555',
         matricula: 'MP-88888'
     }
