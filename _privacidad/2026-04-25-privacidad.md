@@ -26,6 +26,13 @@ Esta es una versión preview/beta de Calíape, limitada a pruebas internas con p
 
 ---
 
+## Responsable del tratamiento de datos
+
+La aplicación y los servicios de Calíape son desarrollados y operados por Caliape SAS, empresa argentina de base tecnológica
+dedicada al desarrollo de soluciones de inteligencia artificial aplicadas a la salud. Caliape SAS es responsable de esta
+Política de Privacidad y del tratamiento de los datos personales que puedan ser recolectados, procesados o almacenados
+a través de sus servicios, de acuerdo con la normativa aplicable en materia de protección de datos personales.
+
 ## Introducción
 
 En Calíape, respetamos tu privacidad y nos comprometemos a proteger tus datos personales.
@@ -41,7 +48,7 @@ El uso de Calíape dentro de un entorno clínico profesional implica el manejo d
 - **Consentimiento Informado del Paciente:** El Usuario (médico) declara y garantiza que, antes de utilizar la Aplicación para grabar cualquier interacción con un paciente, ha obtenido y documentado el **Consentimiento Informado explícito** del paciente o su representante legal. Este consentimiento debe cubrir, al menos, la grabación del audio y el procesamiento de los datos de salud resultantes por Calíape.
 
 - **Cumplimiento Institucional:** El Usuario es el **único responsable** de asegurarse de que el uso de Calíape se ajuste estrictamente a:
-  - Esta política de privacidad y los Términos de Uso de Calíape.
+  - Esta política de privacidad y los [Términos de Uso de Calíape]({{ '/terminos.html' | relative_url }}).
   - El Consentimiento Informado del Paciente específico de la institución hospitalaria.
   - Todas las leyes de privacidad, confidencialidad médica y secreto profesional aplicables en su jurisdicción (como la Ley 25.326 y la Ley 26.529 en Argentina).
 
@@ -336,13 +343,6 @@ La Aplicación está destinada exclusivamente a profesionales de la salud y no e
 Podemos actualizar nuestra política de privacidad de vez en cuando. Te notificaremos
 cualquier cambio publicando la nueva política de privacidad en esta página y actualizando la fecha de "última actualización".
 
-## Responsable del tratamiento de datos
-
-La aplicación y los servicios de Calíape son desarrollados y operados por Caliape SAS, empresa argentina de base tecnológica
-dedicada al desarrollo de soluciones de inteligencia artificial aplicadas a la salud. Caliape SAS es responsable de esta
-Política de Privacidad y del tratamiento de los datos personales que puedan ser recolectados, procesados o almacenados
-a través de sus servicios, de acuerdo con la normativa aplicable en materia de protección de datos personales.
-
 ## Contacto
 
 Para consultas relacionadas con esta Política de Privacidad, el tratamiento de datos personales o
@@ -356,7 +356,7 @@ Página web: [**www.caliape.com**](https://www.caliape.com)
 
 ### Consultas Generales
 
-**[info@caliape.com](info@caliape.com)**
+**[info@caliape.com](mailto:info@caliape.com)**
 
 - Preguntas sobre la política de privacidad
 - Solicitudes de ejercicio de derechos (acceso, corrección, eliminación)
@@ -364,7 +364,7 @@ Página web: [**www.caliape.com**](https://www.caliape.com)
 
 ### Incidentes de Seguridad (URGENTE)
 
-**[security@caliape.com](security@caliape.com)**
+**[security@caliape.com](mailto:security@caliape.com)**
 
 - Sospecha de brecha de seguridad
 - Acceso no autorizado
@@ -376,6 +376,6 @@ Página web: [**www.caliape.com**](https://www.caliape.com)
 - Incidentes de seguridad: **24 horas**
 - Consultas generales: **72 horas hábiles**
 
-También puedes contactarnos a través de nuestra [página de contacto]({{ '/acerca.html' | relative_url }}).
+También puedes contactarnos a través de nuestra [página de contacto y soporte]({{ '/contacto.html' | relative_url }}).
 
 Esta Política de Privacidad corresponde a los servicios ofrecidos por Calíape, desarrollados y operados por Caliape SAS.

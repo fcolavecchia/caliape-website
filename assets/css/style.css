@@ -961,6 +961,46 @@ footer a:hover {
     opacity: 0.8;
 }
 
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.contact-card {
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+
+.contact-card h2,
+.contact-card h3 {
+    margin-top: 0;
+}
+
+.contact-list {
+    list-style: none;
+    margin-left: 0 !important;
+}
+
+.contact-list li {
+    margin-bottom: 0.75rem;
+}
+
+.support-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--light-gray);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .hero-container {

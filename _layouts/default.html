@@ -36,6 +36,7 @@
             <li><a href="{{ '/blog.html' | relative_url }}">Blog</a></li>
             <li><a href="{{ '/faq.html' | relative_url }}">FAQ</a></li>
             <li><a href="{{ '/acerca.html' | relative_url }}">Acerca de</a></li>
+            <li><a href="{{ '/contacto.html' | relative_url }}">Contacto</a></li>
           </ul>
         </div>
       </nav>
@@ -49,7 +50,9 @@
           &copy; {{ 'now' | date: "%Y" }} Caliape SAS. Todos los derechos
           reservados.
         </p>
-        <p>
+        <p class="footer-links">
+          <a href="{{ '/contacto.html' | relative_url }}">Contacto y soporte</a>
+          <a href="{{ '/terminos.html' | relative_url }}">Términos de Uso</a>
           <a href="{{ '/privacidad.html' | relative_url }}"
             >Política de Privacidad de la aplicación</a
           >

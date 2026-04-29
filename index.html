@@ -157,8 +157,9 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
             </div>
             </div>            
             <button type="submit" >Solicite acceso a la prueba de validación</button>
-            <p class="form-disclaimer">No compartiremos esta información con terceros con ningún fin.</p>
+            <p class="form-disclaimer">No vendemos tus datos ni los usamos para publicidad. Podemos usar proveedores técnicos necesarios para operar Calíape, según la Política de Privacidad.</p>
         </form>
+        {% if jekyll.environment == "development" %}
         <div id="betaTestPanel" style="display:none; margin-top: 1rem; text-align: center;">
             <p class="form-disclaimer">Panel de pruebas (solo en local)</p>
             <label style="display:inline-flex; align-items:center; gap:0.5rem; margin-bottom:0.75rem; color:#fff; font-size:0.8rem;">
@@ -172,6 +173,7 @@ description: Calíape - Aplicación móvil de IA médica que automatiza la gener
                 <button type="button" id="betaTestRunAll" class="btn btn-primary">Test: correr todos</button>
             </div>
         </div>
+        {% endif %}
         <div id="formMessage" class="beta-form-message"></div>
     </div>
 </section>
