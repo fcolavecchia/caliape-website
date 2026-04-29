@@ -1,41 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ page.title }} - {{ site.title }}</title>
-    <meta name="description" content="{{ page.description | default: site.description }}">
-    <link rel="icon" type="image/x-icon" href="{{ '/assets/favicon.ico' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+    <meta
+      name="description"
+      content="{{ page.description | default: site.description }}"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ '/assets/favicon.ico' | relative_url }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}"
+    />
     {% seo %}
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <nav class="navbar">
-            <div class="container">
-                <a href="{{ '/' | relative_url }}" class="logo">
-                    <img src="{{ '/assets/images/ios-light.png' | relative_url }}" alt="{{ site.title }}" class="logo-img">
-                    <!-- <span>{{ site.title }}</span> -->
-                </a>
-                <ul class="nav-menu">
-                    <li><a href="{{ '/' | relative_url }}">Inicio</a></li>
-                    <li><a href="{{ '/blog.html' | relative_url }}">Blog</a></li>
-                    <li><a href="{{ '/faq.html' | relative_url }}">FAQ</a></li>
-                    <li><a href="{{ '/acerca.html' | relative_url }}">Acerca de</a></li>
-                </ul>
-            </div>
-        </nav>
+      <nav class="navbar">
+        <div class="container">
+          <a href="{{ '/' | relative_url }}" class="logo">
+            <img
+              src="{{ '/assets/images/ios-light.png' | relative_url }}"
+              alt="{{ site.title }}"
+              class="logo-img"
+            />
+            <!-- <span>{{ site.title }}</span> -->
+          </a>
+          <ul class="nav-menu">
+            <li><a href="{{ '/' | relative_url }}">Inicio</a></li>
+            <li><a href="{{ '/blog.html' | relative_url }}">Blog</a></li>
+            <li><a href="{{ '/faq.html' | relative_url }}">FAQ</a></li>
+            <li><a href="{{ '/acerca.html' | relative_url }}">Acerca de</a></li>
+          </ul>
+        </div>
+      </nav>
     </header>
 
-    <main>
-        {{ content }}
-    </main>
+    <main>{{ content }}</main>
 
     <footer>
-        <div class="container">
-            <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Todos los derechos reservados.</p>
-            <p><a href="{{ '/privacidad.html' | relative_url }}">Política de Privacidad de la aplicación</a></p>
-        </div>
+      <div class="container">
+        <p>
+          &copy; {{ 'now' | date: "%Y" }} Caliape SAS. Todos los derechos
+          reservados.
+        </p>
+        <p>
+          <a href="{{ '/privacidad.html' | relative_url }}"
+            >Política de Privacidad de la aplicación</a
+          >
+        </p>
+      </div>
     </footer>
-</body>
+  </body>
 </html>
