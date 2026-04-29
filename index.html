@@ -210,7 +210,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const betaForm = document.getElementById('betaForm');
 const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+{% if jekyll.environment == "development" %}
 const testMode = isLocalhost && window.BETA_FORM_TEST_MODE !== false;
+{% else %}
+const testMode = false;
+{% endif %}
 
 const selectReferido = betaForm?.querySelector('select[name="referido"]');
 const inputColega = betaForm?.querySelector('input[name="referido_colega"]');
@@ -291,6 +295,7 @@ if (betaForm) {
     
     const messageDiv = document.getElementById('formMessage');
     
+    {% if jekyll.environment == "development" %}
     if (testMode && !window.BETA_FORM_TEST_SEND) {
         console.log('TEST MODE - Payload:', Object.fromEntries(formBody.entries()));
         messageDiv.textContent = 'TEST MODE: solicitud simulada. Payload en consola.';
@@ -298,6 +303,7 @@ if (betaForm) {
         betaForm.reset();
         return;
     }
+    {% endif %}
 
 
 
@@ -510,6 +516,7 @@ if (betaForm) {
     betaForm.addEventListener('change', updateSubmitState);
 }
 
+{% if jekyll.environment == "development" %}
 const setFieldValue = (name, value) => {
     if (!betaForm) return;
     const field = betaForm.querySelector(`[name="${name}"]`);
@@ -632,6 +639,7 @@ if (isLocalhost) {
     if (whitespaceBtn) whitespaceBtn.addEventListener('click', () => window.runBetaTestCase('whitespaceOptional'));
     if (runAllBtn) runAllBtn.addEventListener('click', () => window.runBetaTestSuite());
 }
+{% endif %}
 </script>
 
 
