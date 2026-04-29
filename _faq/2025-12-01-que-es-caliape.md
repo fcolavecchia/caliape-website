@@ -17,7 +17,7 @@ Calíape es una aplicación móvil de inteligencia artificial diseñada específ
 ## Seguridad y privacidad
 
 Calíape está diseñada con seguridad médica desde su concepción:
-- Cifrado end-to-end de todas las comunicaciones
+- Cifrado en tránsito y en reposo para proteger la información
 - Cumplimiento total con normativas de protección de datos sensibles
 - Almacenamiento seguro en la nube
 - Control total del profesional sobre la información

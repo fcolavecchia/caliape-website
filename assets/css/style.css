@@ -218,6 +218,20 @@ header {
     margin-bottom: 1rem;
     color: var(--secondary-color);
 }
+
+.company-note {
+    padding: 1.25rem 0;
+    background-color: var(--white);
+    border-top: 1px solid var(--light-gray);
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.company-note p {
+    margin: 0;
+    text-align: center;
+    color: var(--gray);
+    font-size: 0.98rem;
+}
     .field-reading-order .form-helper-text {
         grid-column: 1 / 2;
         margin-bottom: 0;
